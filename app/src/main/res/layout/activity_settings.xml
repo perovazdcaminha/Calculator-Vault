@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.flipboard.bottomsheet.BottomSheetLayout
+    <LinearLayout
         android:id="@+id/bottomsheet"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -377,8 +377,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:background="@drawable/setting_disguise_icon" />
-                            </RelativeLayout>
+                                    android:background="@drawable/setting_disguise_icon" /></RelativeLayout>
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
@@ -723,6 +722,6 @@
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
-    </com.flipboard.bottomsheet.BottomSheetLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</LinearLayout> 
