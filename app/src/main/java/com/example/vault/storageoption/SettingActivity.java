@@ -59,8 +59,7 @@ import com.example.vault.securitylocks.SecurityLocksCommon.LoginOptions;
 import com.example.vault.securitylocks.SecurityLocksSharedPreferences;
 import com.example.vault.utilities.Common;
 import com.example.vault.utilities.MoveData;
-import com.flipboard.bottomsheet.BottomSheetLayout;
-import com.flipboard.bottomsheet.commons.MenuSheetView;
+import android.widget.PopupMenu;
 
 import java.util.List;
 
@@ -125,7 +124,7 @@ public class SettingActivity extends BaseActivity implements PermissionCallbacks
     private Toolbar toolbar;
     Switch fingerSwitch;
 
-    BottomSheetLayout bottomSheetLayout;
+    boolean bottomSheetShowing = false;
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
     public SecurityLocksSharedPreferences securityLocksSharedPreferences;
@@ -157,24 +156,17 @@ public class SettingActivity extends BaseActivity implements PermissionCallbacks
     }
 
 
-    private void showMenuSheet(final MenuSheetView.MenuType menuType) {
-        MenuSheetView menuSheetView =
-                new MenuSheetView(SettingActivity.this, menuType, "Choose Icon...", new MenuSheetView.OnMenuItemClickListener() {
-
-
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-
-
-                        if (bottomSheetLayout.isSheetShowing()) {
-                            bottomSheetLayout.dismissSheet();
-                        }
-                        ChangeAppIcon(item.getOrder());
-                        return true;
-                    }
-                });
-        menuSheetView.inflateMenu(R.menu.menuicon);
-        bottomSheetLayout.showWithSheetView(menuSheetView);
+    private void showMenuSheet(final Object menuType) {
+        PopupMenu popupMenu = new PopupMenu(SettingActivity.this, selectappicon);
+        popupMenu.getMenuInflater().inflate(R.menu.menuicon, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ChangeAppIcon(item.getOrder());
+                return true;
+            }
+        });
+        popupMenu.show();
     }
 
 
@@ -209,8 +201,6 @@ public class SettingActivity extends BaseActivity implements PermissionCallbacks
         setContentView((int) R.layout.activity_settings);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomsheet);
-        bottomSheetLayout.setPeekOnDismiss(true);
 
         SecurityLocksCommon.IsAppDeactive = true;
         getWindow().addFlags(128);
@@ -225,7 +215,7 @@ public class SettingActivity extends BaseActivity implements PermissionCallbacks
             @Override
             public void onClick(View view) {
 
-                showMenuSheet(MenuSheetView.MenuType.LIST);
+                showMenuSheet(null);
 
 
 //                powerMenu = new PowerMenu.Builder(SettingActivity.this)
@@ -534,9 +524,8 @@ public class SettingActivity extends BaseActivity implements PermissionCallbacks
 
     public void btnBackonClick() {
         SecurityLocksCommon.IsAppDeactive = false;
-        if (bottomSheetLayout.isSheetShowing()) {
-            bottomSheetLayout.dismissSheet();
-        } else {
+        if (false) {
+            } else {
 
 
             startActivity(new Intent(this, MainiFeaturesActivity.class));
@@ -711,8 +700,7 @@ public class SettingActivity extends BaseActivity implements PermissionCallbacks
         if (i == 4) {
             SecurityLocksCommon.IsAppDeactive = false;
 
-            if (bottomSheetLayout.isSheetShowing()) {
-                bottomSheetLayout.dismissSheet();
+            if (false) {
             } else {
 
 
